@@ -5,7 +5,7 @@
   <parent>
     <artifactId>drools-wb-scenario-simulation-editor</artifactId>
     <groupId>org.drools</groupId>
-    <version>7.49.0-SNAPSHOT</version>
+    <version>7.48.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -45,10 +45,6 @@
     </dependency>
     <dependency>
       <groupId>org.jboss.errai</groupId>
-      <artifactId>errai-bus</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.errai</groupId>
       <artifactId>errai-ui</artifactId>
       <scope>provided</scope>
     </dependency>
@@ -56,24 +52,6 @@
       <groupId>org.jboss.errai</groupId>
       <artifactId>errai-data-binding</artifactId>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.errai</groupId>
-      <artifactId>errai-marshalling</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.errai</groupId>
-      <artifactId>errai-security-server</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.jboss.spec.javax.annotation</groupId>
-          <artifactId>jboss-annotations-api_1.3_spec</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.errai</groupId>
-      <artifactId>errai-cdi-server</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jboss.errai</groupId>
@@ -121,13 +99,6 @@
       <classifier>sources</classifier>
     </dependency>
 
-    <!-- UberFire JS exporter -->
-    <!-- Needed by uberfire-runtime-plugins-client -->
-    <dependency>
-      <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-js</artifactId>
-      <scope>provided</scope>
-    </dependency>
     <!-- Core UberFire dependencies -->
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -155,10 +126,6 @@
     <!-- NEEDED BY JSEntryPoint ? -->
     <dependency>
       <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-backend-server</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.uberfire</groupId>
       <artifactId>uberfire-services-api</artifactId>
     </dependency>
     <dependency>
@@ -172,15 +139,6 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-client-backend</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-security-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-security-client</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -205,6 +163,11 @@
       <artifactId>elemental2-promise</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>com.google.elemental2</groupId>
+      <artifactId>elemental2-webstorage</artifactId>
+    </dependency>
+
     <!-- Needed for the ACE SIMULATION_READER Editor -->
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -220,35 +183,12 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-nio2-model</artifactId>
-    </dependency>
-
-    <!-- Needed by org.uberfire.java.nio.file.spi.FileSystemProvider -->
-    <dependency>
-      <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-nio2-jgit</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-nio2-fs</artifactId>
-    </dependency>
-    <!-- END PROVIDERS -->
-
-    <!-- Uberfire SSH -->
-    <!-- Required by uberfire-backend-server to secure FileSystem -->
-    <dependency>
-      <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-ssh-backend</artifactId>
-    </dependency>
-
-    <!-- Provides FileSystem with qualifiers @Named("systemFS") -->
-    <dependency>
-      <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-backend-cdi</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <!-- Uberfire Experimentals -->
     <!-- Required by uberfire-workbench-client -->
-    <dependency>
+<!--    <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-experimental-api</artifactId>
     </dependency>
@@ -256,7 +196,7 @@
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-experimental-client</artifactId>
       <scope>provided</scope>
-    </dependency>
+    </dependency>-->
 
     <!-- Core utility classes -->
     <dependency>
@@ -294,12 +234,6 @@
     <dependency>
       <groupId>org.kie.workbench.widgets</groupId>
       <artifactId>kie-wb-common-ui</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.uberfire</groupId>
-          <artifactId>uberfire-security-management-client</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <dependency>
@@ -319,6 +253,7 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-structure-api</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <!--     Required by uberfire-project-client-->
@@ -396,6 +331,10 @@
       <artifactId>kie-soup-project-datamodel-api</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.kie.workbench</groupId>
+      <artifactId>kie-wb-common-command-api</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-message-console-api</artifactId>
     </dependency>
@@ -437,11 +376,12 @@
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-preferences-api</artifactId>
     </dependency>
-    <dependency>
+
+<!--    <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-preferences-client-backend</artifactId>
       <scope>provided</scope>
-    </dependency>
+    </dependency>-->
 
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -467,22 +407,10 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-wires-core-client</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.uberfire</groupId>
-          <artifactId>uberfire-all</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-wires-core-trees</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.uberfire</groupId>
-          <artifactId>uberfire-all</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <!-- Add for enforcer -->
@@ -493,6 +421,7 @@
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-scenario-simulation-api</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.drools</groupId>
@@ -523,20 +452,12 @@
       <artifactId>uberfire-wires-core-grids</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.kie.workbench</groupId>
-      <artifactId>kie-wb-common-command-api</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.kie.workbench.widgets</groupId>
       <artifactId>kie-wb-config-resource-widget</artifactId>
     </dependency>
     <dependency>
       <groupId>org.kie.workbench.widgets</groupId>
       <artifactId>kie-wb-metadata-widget</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.errai</groupId>
-      <artifactId>errai-jaxrs-client</artifactId>
     </dependency>
     <dependency>
       <groupId>xml-apis</groupId>
@@ -548,12 +469,6 @@
       <artifactId>appformer-kogito-bridge</artifactId>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>org.uberfire</groupId>
-      <artifactId>appformer-js-bridge</artifactId>
-      <scope>provided</scope>
-    </dependency>
-
     <!-- MARSHALLING -->
     <dependency>
       <groupId>org.drools</groupId>
@@ -598,12 +513,78 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-marshaller-js</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/src/main/webapp/model</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.parent.basedir}/drools-wb-scenario-simulation-editor-kogito-marshaller/src/main/resources/org/drools/workbench/scenariosimulation/kogito/marshaller/js/</directory>
+                  <includes>
+                    <include>**/*.js</include>
+                  </includes>
+                </resource>
+                <resource>
+                  <directory>${project.build.directory}/Marshaller/org/kie/workbench/common/dmn/webapp/kogito/marshaller/js</directory>
+                  <includes>
+                    <include>**/*.js</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
 
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
         <configuration>
-          <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
+          <disableCastChecking>true</disableCastChecking>
+          <runTarget>index.html</runTarget>
+          <modules>
+            <module>org.drools.workbench.screens.scenariosimulation.webapp.DroolsWorkbenchScenarioSimulationKogitoTesting</module>
+          </modules>
+          <logLevel>INFO</logLevel>
+          <noServer>false</noServer>
+          <extraJvmArgs>-Xmx2048m -XX:CompileThreshold=7000 -Djava.io.tmpdir=${project.build.directory}
+          </extraJvmArgs>
+          <disableCastChecking>true</disableCastChecking>
+          <soycDetailed>false</soycDetailed>
+          <hostedWebapp>src/main/webapp</hostedWebapp>
+          <strict>true</strict>
+          <compileReport>true</compileReport>
+          <saveSource>true</saveSource>
+
+
+
+<!--          <runTarget>index.html</runTarget>
+          <modules>
+            <module>org.drools.workbench.screens.scenariosimulation.webapp.DroolsWorkbenchScenarioSimulationKogitoTesting</module>
+          </modules>
+          <logLevel>INFO</logLevel>
+          <noServer>false</noServer>
+          <extraJvmArgs>-Xmx2048m -XX:CompileThreshold=7000 -Djava.io.tmpdir=${project.build.directory}
+          </extraJvmArgs>
+          <disableCastChecking>true</disableCastChecking>
+          <soycDetailed>false</soycDetailed>
+          <hostedWebapp>src/main/webapp</hostedWebapp>
+          <strict>true</strict>
+          <compileReport>true</compileReport>
+          <saveSource>true</saveSource>
+          <server>org.jboss.errai.cdi.server.gwt.EmbeddedWildFlyLauncher</server>-->
+
+
+<!--          <deploy>${project.build.directory}/gwt-symbols-deploy</deploy>
           <extraJvmArgs>-Xmx8G -Xms1024m -Xss1M -XX:CompileThreshold=7000 -Derrai.jboss.home=${wildfly.home} -Derrai.marshalling.server.classOutput=${project.build.outputDirectory} -Derrai.dynamic_validation.enabled=true -Djava.io.tmpdir=${project.build.directory}</extraJvmArgs>
           <module>org.drools.workbench.screens.scenariosimulation.webapp.DroolsWorkbenchScenarioSimulationKogitoTesting</module>
           <logLevel>TRACE</logLevel>
@@ -614,7 +595,7 @@
           <hostedWebapp>src/main/webapp</hostedWebapp>
           <workDir>${project.build.directory}</workDir>
           <draftCompile>true</draftCompile>
-          <style>PRETTY</style>
+          <style>PRETTY</style>-->
 
           <compileSourcesArtifacts>
             <compileSourcesArtifact>org.kie.soup:kie-soup-commons</compileSourcesArtifact>
@@ -625,9 +606,6 @@
             <compileSourcesArtifact>org.uberfire:uberfire-nio2-model</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-io</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.uberfire:uberfire-js</compileSourcesArtifact>
-            <compileSourcesArtifact>org.uberfire:uberfire-security-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.uberfire:uberfire-security-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-client-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-workbench-client</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:uberfire-workbench-client-views-patternfly</compileSourcesArtifact>
@@ -643,6 +621,7 @@
 
             <!-- Errai, Drools etc -->
             <compileSourcesArtifact>org.jboss.errai:errai-data-binding</compileSourcesArtifact>
+            <compileSourcesArtifact>org.kie.workbench:kie-wb-common-command-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-common-ui</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-datamodel-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.services:kie-wb-common-services-api</compileSourcesArtifact>
@@ -665,18 +644,16 @@
             <compileSourcesArtifact>org.uberfire:uberfire-preferences-ui-client</compileSourcesArtifact>
 
             <!-- Uberfire Experimentals -->
-            <compileSourcesArtifact>org.uberfire:uberfire-experimental-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.uberfire:uberfire-experimental-client</compileSourcesArtifact>
+<!--            <compileSourcesArtifact>org.uberfire:uberfire-experimental-api</compileSourcesArtifact>
+            <compileSourcesArtifact>org.uberfire:uberfire-experimental-client</compileSourcesArtifact>-->
             <compileSourcesArtifact>org.uberfire:uberfire-wires-core-grids</compileSourcesArtifact>
 
             <!-- Appformer -->
             <compileSourcesArtifact>org.uberfire:appformer-client-api</compileSourcesArtifact>
-            <compileSourcesArtifact>org.uberfire:appformer-js-bridge</compileSourcesArtifact>
             <compileSourcesArtifact>org.uberfire:appformer-kogito-bridge</compileSourcesArtifact>
 
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-metadata-widget</compileSourcesArtifact>
             <compileSourcesArtifact>org.kie.workbench.widgets:kie-wb-config-resource-widget</compileSourcesArtifact>
-            <compileSourcesArtifact>org.kie.workbench:kie-wb-common-command-api</compileSourcesArtifact>
             <!-- drools-wb -->
             <compileSourcesArtifact>org.drools:drools-wb-scenario-simulation-editor-api</compileSourcesArtifact>
             <compileSourcesArtifact>org.drools:drools-scenario-simulation-api</compileSourcesArtifact>

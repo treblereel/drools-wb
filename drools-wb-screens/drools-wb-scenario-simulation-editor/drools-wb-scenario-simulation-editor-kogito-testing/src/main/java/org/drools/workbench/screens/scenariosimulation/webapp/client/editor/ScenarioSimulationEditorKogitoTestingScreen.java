@@ -23,6 +23,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
 import com.google.gwt.core.client.GWT;
+import elemental2.dom.DomGlobal;
 import org.drools.workbench.screens.scenariosimulation.client.editor.ScenarioMenuItem;
 import org.drools.workbench.screens.scenariosimulation.client.popup.FileUploadPopupPresenter;
 import org.drools.workbench.screens.scenariosimulation.client.resources.i18n.ScenarioSimulationEditorConstants;
@@ -76,16 +77,30 @@ public class ScenarioSimulationEditorKogitoTestingScreen extends AbstractScenari
     @OnStartup
     @Override
     public void onStartup(final PlaceRequest place) {
-        getItemsByPath(SCESIM_PATH);
-        getItemsByPath(DMN_PATH);
+        DomGlobal.console.log(" onStartup 1 " + place);
+        DomGlobal.console.log(" onStartup 2 " + place.getClass().getCanonicalName());
+
+        //getItemsByPath(SCESIM_PATH);
+        //getItemsByPath(DMN_PATH);
         addTestingMenus(scenarioSimulationEditorKogitoWrapper.getFileMenuBuilder());
         super.onStartup(place);
     }
 
     protected void getItemsByPath(Path path) {
-        testingVFSService.getItemsByPath(path, response -> {
+        DomGlobal.console.log("getItemsByPath " + path);
+        DomGlobal.console.log("testingVFSService ? " + (testingVFSService != null));
+        DomGlobal.console.log("testingVFSService ? " + (testingVFSService.getClass().getCanonicalName()));
+
+        testingVFSService.createDirectory(path);
+
+
+/*        testingVFSService.getItemsByPath(path, response -> {
             // do nothing
         }, (message, throwable) -> {
+            DomGlobal.console.log("throwable " + throwable);
+            DomGlobal.console.log("throwable " + throwable.getMessage());
+            DomGlobal.console.log("throwable " + throwable.getClass().getCanonicalName());
+
             if (throwable instanceof org.uberfire.java.nio.file.NotDirectoryException) {
                 testingVFSService.createDirectory(path);
                 return true;
@@ -93,7 +108,7 @@ public class ScenarioSimulationEditorKogitoTestingScreen extends AbstractScenari
                 GWT.log(message.toString(), throwable);
                 return false;
             }
-        });
+        });*/
     }
 
     @WorkbenchMenu
@@ -109,6 +124,8 @@ public class ScenarioSimulationEditorKogitoTestingScreen extends AbstractScenari
             String fileName = fullUri.substring(fullUri.lastIndexOf('/') + 1);
             final Path path = PathFactory.newPath(fileName, fullUri);
             testingVFSService.loadFile(path, content -> {
+                DomGlobal.console.log("XML>" + content + "<");
+
                 scenarioSimulationEditorKogitoWrapper.gotoPath(path);
                 scenarioSimulationEditorKogitoWrapper.setContent(null, content);
             }, getErrorCallback("Failed to load"));
@@ -134,6 +151,15 @@ public class ScenarioSimulationEditorKogitoTestingScreen extends AbstractScenari
             fileName = fileName.replaceAll("\\s+", "_");
             String content = fileUploadPopupPresenter.getFileContents();
             final Path path = PathFactory.newPath(fileName, uri + fileName);
+
+            DomGlobal.console.log("createImportCommand 1 " + uri);
+            DomGlobal.console.log("createImportCommand 2 " + fileName);
+            DomGlobal.console.log("createImportCommand 3 " + path);
+            DomGlobal.console.log("content " + content);
+
+            //scenarioSimulationEditorKogitoWrapper.setContent(fileName, content);
+
+
             saveFile(path, content);
         };
         fileUploadPopupPresenter.show(Collections.singletonList(extension),
@@ -143,6 +169,8 @@ public class ScenarioSimulationEditorKogitoTestingScreen extends AbstractScenari
     }
 
     protected void saveFile(final Path path, final String content) {
+        DomGlobal.console.log("ON saveFile " + path);
+
         testingVFSService.saveFile(path, content,
                                    item -> GWT.log("Saved " + item),
                                    getErrorCallback("Failed to save"));

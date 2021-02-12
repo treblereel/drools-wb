@@ -5,7 +5,7 @@
   <parent>
     <artifactId>drools-wb-scenario-simulation-editor</artifactId>
     <groupId>org.drools</groupId>
-    <version>7.49.0-SNAPSHOT</version>
+    <version>7.48.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -18,11 +18,6 @@
   <dependencies>
 
     <!-- Errai -->
-    <dependency>
-      <groupId>org.jboss.errai</groupId>
-      <artifactId>errai-javax-enterprise</artifactId>
-    </dependency>
-
     <!-- Uberfire -->
     <dependency>
       <groupId>org.uberfire</groupId>
@@ -39,10 +34,10 @@
 
     <!-- Uberfire Experimentals -->
     <!-- Required by uberfire-workbench-client -->
-    <dependency>
+<!--    <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-experimental-api</artifactId>
-    </dependency>
+    </dependency>-->
 
     <dependency>
       <groupId>com.google.gwt</groupId>

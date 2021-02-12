@@ -29,10 +29,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.uberfire.backend.vfs.DirectoryStream;
 import org.uberfire.backend.vfs.Path;
-import org.uberfire.backend.vfs.VFSService;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.commons.uuid.UUID;
-import org.uberfire.mocks.CallerMock;
 import org.uberfire.mvp.PlaceRequest;
 
 import static org.drools.workbench.screens.scenariosimulation.webapp.client.services.TestingVFSService.CONTENT_PARAMETER_NAME;
@@ -59,7 +57,7 @@ public class TestingVFSServiceTest {
     private Path pathMock;
 
     @Mock
-    private VFSService vfsServiceMock;
+    private VFSServiceFake vfsServiceMock;
 
     @Mock
     private RemoteCallback<String> callbackMock;
@@ -72,13 +70,13 @@ public class TestingVFSServiceTest {
 
     private List<Path> files;
 
-    private CallerMock<VFSService> vfsServiceCallerMock;
+    private VFSServiceFake vfsServiceCallerMock;
 
     private TestingVFSService testingVFSService;
 
     @Before
     public void setup() {
-        vfsServiceCallerMock = new CallerMock(vfsServiceMock);
+        vfsServiceCallerMock = new VFSServiceFake();
         files = IntStream.range(0, 6).mapToObj(value -> {
             String suffix = value < 3 ? "scesim" : "dmn";
             return getPathMock(suffix);

@@ -45,7 +45,6 @@ import org.uberfire.mvp.Command;
 import org.uberfire.rpc.SessionInfo;
 import org.uberfire.security.ResourceAction;
 import org.uberfire.security.ResourceRef;
-import org.uberfire.security.authz.AuthorizationManager;
 import org.uberfire.workbench.events.NotificationEvent;
 import org.uberfire.workbench.model.ActivityResourceType;
 import org.uberfire.workbench.type.ResourceTypeDefinition;
@@ -65,7 +64,6 @@ public class NewScenarioSimulationHandler
 
     private ScenarioSimulationResourceType resourceType;
 
-    private final AuthorizationManager authorizationManager;
     private final SessionInfo sessionInfo;
     private final ScenarioSimulationDropdown scenarioSimulationDropdown;
 
@@ -76,11 +74,9 @@ public class NewScenarioSimulationHandler
                                         final Event<NewResourceSuccessEvent> newResourceSuccessEvent,
                                         final PlaceManager placeManager,
                                         final Caller<ScenarioSimulationService> scenarioSimulationService,
-                                        final AuthorizationManager authorizationManager,
                                         final SessionInfo sessionInfo,
                                         @Named(ScenarioSimulationDropdown.BEAN_NAME) final ScenarioSimulationDropdown scenarioSimulationDropdown) {
         this.resourceType = resourceType;
-        this.authorizationManager = authorizationManager;
         this.sessionInfo = sessionInfo;
         this.newResourceSuccessEvent = newResourceSuccessEvent;
         this.busyIndicatorView = busyIndicatorView;
@@ -107,10 +103,11 @@ public class NewScenarioSimulationHandler
 
     @Override
     public boolean canCreate() {
-        return authorizationManager.authorize(new ResourceRef(ScenarioSimulationEditorPresenter.IDENTIFIER,
+/*        return authorizationManager.authorize(new ResourceRef(ScenarioSimulationEditorPresenter.IDENTIFIER,
                                                               ActivityResourceType.EDITOR),
                                               ResourceAction.READ,
-                                              sessionInfo.getIdentity());
+                                              sessionInfo.getIdentity());*/
+        return true;
     }
 
     @Override

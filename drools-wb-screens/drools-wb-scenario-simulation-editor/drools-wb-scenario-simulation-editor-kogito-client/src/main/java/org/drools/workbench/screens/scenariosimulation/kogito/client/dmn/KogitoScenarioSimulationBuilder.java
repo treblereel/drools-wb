@@ -26,6 +26,8 @@ import java.util.function.BiFunction;
 
 import javax.inject.Inject;
 
+import com.google.gwt.core.client.GWT;
+import elemental2.dom.DomGlobal;
 import org.drools.scenariosimulation.api.model.AbstractScesimData;
 import org.drools.scenariosimulation.api.model.AbstractScesimModel;
 import org.drools.scenariosimulation.api.model.Background;
@@ -131,13 +133,25 @@ public class KogitoScenarioSimulationBuilder {
     private Callback<JSITDefinitions> getDMNContentCallback(final ScenarioSimulationModel toPopulate,
                                                             final Callback<ScenarioSimulationModel> populateEditorCommand,
                                                             final Path dmnPath) {
-        return jsitDefinitions -> {
-            final FactModelTuple factModelTuple = dmnDataManager.getFactModelTuple(jsitDefinitions);
-            toPopulate.setSimulation(createDMNSimulation(factModelTuple));
-            toPopulate.setSettings(createDMNSettings(jsitDefinitions.getName(),
-                                                     jsitDefinitions.getNamespace(),
-                                                     dmnPath.toURI()));
-            populateEditorCommand.callback(toPopulate);
+
+        return new Callback<JSITDefinitions>() {
+            @Override
+            public void callback(JSITDefinitions jsitDefinitions) {
+                DomGlobal.console.log("getDMNContentCallback 1 " + jsitDefinitions.toString());
+                final FactModelTuple factModelTuple = dmnDataManager.getFactModelTuple(jsitDefinitions);
+                DomGlobal.console.log("getDMNContentCallback 2");
+
+                toPopulate.setSimulation(KogitoScenarioSimulationBuilder.this.createDMNSimulation(factModelTuple));
+                DomGlobal.console.log("getDMNContentCallback 3");
+
+                toPopulate.setSettings(KogitoScenarioSimulationBuilder.this.createDMNSettings(jsitDefinitions.getName(),
+                                                                                              jsitDefinitions.getNamespace(),
+                                                                                              dmnPath.toURI()));
+                DomGlobal.console.log("getDMNContentCallback 4");
+
+                populateEditorCommand.callback(toPopulate);
+                DomGlobal.console.log("getDMNContentCallback 5");
+            }
         };
     }
 
@@ -302,6 +316,7 @@ public class KogitoScenarioSimulationBuilder {
      * @return
      */
     protected static double getColumnWidth(String expressionIdentifierName) {
+        GWT.log("expressionIdentifierName " + expressionIdentifierName);
         ExpressionIdentifier.NAME expressionName;
         try {
             expressionName = ExpressionIdentifier.NAME.valueOf(expressionIdentifierName);

@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.drools</groupId>
     <artifactId>drools-wb-dtable-xls-editor</artifactId>
-    <version>7.49.0-SNAPSHOT</version>
+    <version>7.48.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>drools-wb-dtable-xls-editor-backend</artifactId>
@@ -84,20 +84,6 @@
       <artifactId>uberfire-project-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.jboss.errai</groupId>
-      <artifactId>errai-bus</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.errai</groupId>
-      <artifactId>errai-security-server</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.jboss.spec.javax.annotation</groupId>
-          <artifactId>jboss-annotations-api_1.3_spec</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
       <groupId>org.kie</groupId>
       <artifactId>kie-internal</artifactId>
     </dependency>
@@ -124,10 +110,6 @@
     <dependency>
       <groupId>org.uberfire</groupId>
       <artifactId>uberfire-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.uberfire</groupId>
-      <artifactId>uberfire-backend-server</artifactId>
     </dependency>
     <dependency>
       <groupId>org.uberfire</groupId>

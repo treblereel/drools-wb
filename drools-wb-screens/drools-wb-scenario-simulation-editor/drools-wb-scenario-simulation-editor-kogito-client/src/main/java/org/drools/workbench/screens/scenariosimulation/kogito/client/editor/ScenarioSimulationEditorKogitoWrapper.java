@@ -25,6 +25,7 @@ import javax.inject.Inject;
 
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.PopupPanel;
+import elemental2.dom.DomGlobal;
 import elemental2.promise.Promise;
 import jsinterop.base.Js;
 import org.drools.scenariosimulation.api.model.AbstractScesimData;
@@ -157,6 +158,8 @@ public class ScenarioSimulationEditorKogitoWrapper extends MultiPageEditorContai
 
     @Override
     public Promise setContent(String fullPath, String content) {
+        DomGlobal.console.log("setContent fullPath " + fullPath);
+        DomGlobal.console.log("setContent content " + content);
         return promises.create((success, failure) -> manageContent(fullPath, content, success, failure));
     }
 
@@ -423,7 +426,8 @@ public class ScenarioSimulationEditorKogitoWrapper extends MultiPageEditorContai
                                                                          scenarioSimulationKogitoDMNMarshallerService);
         }
         dataManagementStrategy.setModel(model);
-        setOriginalContentHash(scenarioSimulationEditorPresenter.getJsonModel(model).hashCode());
+        //setOriginalContentHash(scenarioSimulationEditorPresenter.getJsonModel(model).hashCode()); //TODO
+        setOriginalContentHash(model.hashCode());
         scenarioSimulationEditorPresenter.getModelSuccessCallbackMethod(dataManagementStrategy, model);
         scenarioSimulationEditorPresenter.showDocks(PlaceStatus.CLOSE);
     }
