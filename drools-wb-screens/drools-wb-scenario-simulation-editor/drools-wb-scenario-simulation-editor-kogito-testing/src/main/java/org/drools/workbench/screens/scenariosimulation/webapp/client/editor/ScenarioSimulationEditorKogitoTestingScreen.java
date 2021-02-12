@@ -49,8 +49,8 @@ import static org.drools.workbench.screens.scenariosimulation.webapp.client.edit
 public class ScenarioSimulationEditorKogitoTestingScreen extends AbstractScenarioSimulationEditorKogitoScreen {
 
     public static final String IDENTIFIER = "ScenarioSimulationEditorKogitoTestingScreen";
-    private static final String BASE_URI = "git://master@system/system/";
-    public static final String BASE_DMN_URI = BASE_URI + "stunner/diagrams/";
+    private static final String BASE_URI = "/asserts/";
+    public static final String BASE_DMN_URI = BASE_URI + "dmn/";
     public static final String BASE_SCESIM_URI = BASE_URI + "scesim/";
     public static final Path DMN_PATH = PathFactory.newPath("DMN", BASE_DMN_URI);
     public static final Path SCESIM_PATH = PathFactory.newPath("SCESIM", BASE_SCESIM_URI);
@@ -76,24 +76,12 @@ public class ScenarioSimulationEditorKogitoTestingScreen extends AbstractScenari
     @OnStartup
     @Override
     public void onStartup(final PlaceRequest place) {
-        getItemsByPath(SCESIM_PATH);
-        getItemsByPath(DMN_PATH);
         addTestingMenus(scenarioSimulationEditorKogitoWrapper.getFileMenuBuilder());
         super.onStartup(place);
     }
 
     protected void getItemsByPath(Path path) {
-        testingVFSService.getItemsByPath(path, response -> {
-            // do nothing
-        }, (message, throwable) -> {
-            if (throwable instanceof org.uberfire.java.nio.file.NotDirectoryException) {
-                testingVFSService.createDirectory(path);
-                return true;
-            } else {
-                GWT.log(message.toString(), throwable);
-                return false;
-            }
-        });
+        testingVFSService.createDirectory(path);
     }
 
     @WorkbenchMenu
@@ -152,7 +140,9 @@ public class ScenarioSimulationEditorKogitoTestingScreen extends AbstractScenari
         fileMenuBuilder.addNewTopLevelMenu(new ScenarioMenuItem("New", () -> scenarioSimulationEditorKogitoWrapper.setContent(null, null)));
         fileMenuBuilder.addNewTopLevelMenu(new ScenarioMenuItem("Load", this::loadFile));
         fileMenuBuilder.addNewTopLevelMenu(new ScenarioMenuItem("Save", () -> scenarioSimulationEditorKogitoWrapper.getContent().then(xml -> {
-            saveFile(scenarioSimulationEditorKogitoWrapper.getCurrentPath(), xml);
+            String fileName = BASE_SCESIM_URI + scenarioSimulationEditorKogitoWrapper.getCurrentPath().getFileName();
+            String uri = BASE_SCESIM_URI + fileName;
+            saveFile(PathFactory.newPath(fileName, uri), xml);
             return promises.resolve();
         })));
         fileMenuBuilder.addNewTopLevelMenu(new ScenarioMenuItem("Import DMN", this::importDMN));

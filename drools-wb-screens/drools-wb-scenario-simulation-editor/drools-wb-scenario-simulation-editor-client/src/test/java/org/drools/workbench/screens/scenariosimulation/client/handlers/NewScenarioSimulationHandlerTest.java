@@ -17,11 +17,9 @@ package org.drools.workbench.screens.scenariosimulation.client.handlers;
 
 import com.google.gwtmockito.GwtMockitoTestRunner;
 import org.drools.scenariosimulation.api.model.ScenarioSimulationModel;
-import org.drools.workbench.screens.scenariosimulation.client.editor.ScenarioSimulationEditorPresenter;
 import org.drools.workbench.screens.scenariosimulation.client.type.ScenarioSimulationResourceType;
 import org.drools.workbench.screens.scenariosimulation.service.ScenarioSimulationService;
 import org.guvnor.common.services.project.model.Package;
-import org.jboss.errai.security.shared.api.identity.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,14 +35,9 @@ import org.uberfire.ext.widgets.common.client.common.BusyIndicatorView;
 import org.uberfire.mocks.CallerMock;
 import org.uberfire.mocks.EventSourceMock;
 import org.uberfire.rpc.SessionInfo;
-import org.uberfire.security.ResourceAction;
 import org.uberfire.security.ResourceRef;
-import org.uberfire.security.authz.AuthorizationManager;
 import org.uberfire.workbench.events.NotificationEvent;
-import org.uberfire.workbench.model.ActivityResourceType;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -72,12 +65,7 @@ public class NewScenarioSimulationHandlerTest extends AbstractNewScenarioTest {
     @Mock
     private PlaceManager placeManagerMock;
     @Mock
-    private AuthorizationManager authorizationManagerMock;
-    @Mock
     private SessionInfo sessionInfoMock;
-
-    @Mock
-    private User userMock;
 
     @Captor
     private ArgumentCaptor<ResourceRef> refArgumentCaptor;
@@ -102,7 +90,6 @@ public class NewScenarioSimulationHandlerTest extends AbstractNewScenarioTest {
                                                        newResourceSuccessEventMock,
                                                        placeManagerMock,
                                                        scenarioSimulationServiceCallerMock,
-                                                       authorizationManagerMock,
                                                        sessionInfoMock,
                                                        scenarioSimulationDropdownMock) {
             {
@@ -110,7 +97,6 @@ public class NewScenarioSimulationHandlerTest extends AbstractNewScenarioTest {
                 this.sourceTypeSelector = sourceTypeSelectorMock;
             }
         });
-        when(sessionInfoMock.getIdentity()).thenReturn(userMock);
     }
 
     @Test
@@ -129,21 +115,8 @@ public class NewScenarioSimulationHandlerTest extends AbstractNewScenarioTest {
     }
 
     @Test
-    public void checkCanCreateWhenFeatureDisabled() {
-        when(authorizationManagerMock.authorize(any(ResourceRef.class),
-                                                eq(ResourceAction.READ),
-                                                eq(userMock))).thenReturn(false);
-        assertFalse(handler.canCreate());
-        assertResourceRef();
-    }
-
-    @Test
     public void checkCanCreateWhenFeatureEnabled() {
-        when(authorizationManagerMock.authorize(any(ResourceRef.class),
-                                                eq(ResourceAction.READ),
-                                                eq(userMock))).thenReturn(true);
         assertTrue(handler.canCreate());
-        assertResourceRef();
     }
 
     @Test
@@ -179,13 +152,4 @@ public class NewScenarioSimulationHandlerTest extends AbstractNewScenarioTest {
         }
     }
 
-    private void assertResourceRef() {
-        verify(authorizationManagerMock).authorize(refArgumentCaptor.capture(),
-                                                   eq(ResourceAction.READ),
-                                                   eq(userMock));
-        assertEquals(ScenarioSimulationEditorPresenter.IDENTIFIER,
-                     refArgumentCaptor.getValue().getIdentifier());
-        assertEquals(ActivityResourceType.EDITOR,
-                     refArgumentCaptor.getValue().getResourceType());
-    }
 }

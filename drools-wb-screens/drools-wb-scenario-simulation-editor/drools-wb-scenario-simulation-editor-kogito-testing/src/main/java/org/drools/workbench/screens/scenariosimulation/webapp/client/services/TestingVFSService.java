@@ -23,12 +23,10 @@ import java.util.stream.StreamSupport;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import org.jboss.errai.common.client.api.Caller;
 import org.jboss.errai.common.client.api.ErrorCallback;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.uberfire.backend.vfs.DirectoryStream;
 import org.uberfire.backend.vfs.Path;
-import org.uberfire.backend.vfs.VFSService;
 import org.uberfire.client.mvp.PlaceManager;
 import org.uberfire.mvp.PlaceRequest;
 import org.uberfire.mvp.impl.DefaultPlaceRequest;
@@ -42,7 +40,10 @@ public class TestingVFSService {
     public static final String CONTENT_PARAMETER_NAME = "content";
     public static final String FILE_NAME_PARAMETER_NAME = "fileName";
     private PlaceManager placeManager;
-    private Caller<VFSService> vfsServiceCaller;
+    private VFSServiceFake vfsServiceCaller;
+
+    @Inject
+    private VFSServiceFake vfsServiceFake;
 
     public TestingVFSService() {
         //CDI proxy
@@ -50,7 +51,7 @@ public class TestingVFSService {
 
     @Inject
     public TestingVFSService(final PlaceManager placeManager,
-                             final Caller<VFSService> vfsServiceCaller) {
+                             final VFSServiceFake vfsServiceCaller) {
         this.placeManager = placeManager;
         this.vfsServiceCaller = vfsServiceCaller;
     }
@@ -61,7 +62,7 @@ public class TestingVFSService {
      * @return
      */
     public Path createDirectory(final Path dir) {
-        return vfsServiceCaller.call().createDirectory(dir);
+        return vfsServiceCaller.createDirectory(dir);
     }
 
     /**
@@ -83,12 +84,19 @@ public class TestingVFSService {
      */
     public void openFile(final Path path,
                          final String editorId) {
-        vfsServiceCaller.call((String xml) -> {
+        String xml = vfsServiceCaller.readAllString(path);
+
+        final PlaceRequest placeRequest = new DefaultPlaceRequest(editorId);
+        placeRequest.addParameter(FILE_NAME_PARAMETER_NAME, path.getFileName());
+        placeRequest.addParameter(CONTENT_PARAMETER_NAME, xml);
+        placeManager.goTo(placeRequest);
+
+/*        vfsServiceCaller.call((String xml) -> {
             final PlaceRequest placeRequest = new DefaultPlaceRequest(editorId);
             placeRequest.addParameter(FILE_NAME_PARAMETER_NAME, path.getFileName());
             placeRequest.addParameter(CONTENT_PARAMETER_NAME, xml);
             placeManager.goTo(placeRequest);
-        }).readAllString(path);
+        }).readAllString(path);*/
     }
 
     /**
@@ -100,7 +108,8 @@ public class TestingVFSService {
     public <T> void loadFile(final Path path,
                              final RemoteCallback<String> callback,
                              final ErrorCallback<T> errorCallback) {
-        vfsServiceCaller.call(callback, errorCallback).readAllString(path);
+        String xml = vfsServiceCaller.readAllString(path);
+        callback.callback(xml);
     }
 
     @SuppressWarnings("unchecked")
@@ -108,7 +117,8 @@ public class TestingVFSService {
                              final String xml,
                              final RemoteCallback<String> callback,
                              final ErrorCallback<T> errorCallback) {
-        vfsServiceCaller.call((Path p) -> callback.callback(xml), errorCallback).write(path, xml);
+        Path result = vfsServiceCaller.write(path, xml);
+        callback.callback(xml);
     }
 
     /**
@@ -121,11 +131,10 @@ public class TestingVFSService {
     public <T> void getItemsByPath(final Path root,
                                    final RemoteCallback<List<Path>> callback,
                                    final ErrorCallback<T> errorCallback) {
-        vfsServiceCaller.call((DirectoryStream<Path> paths) -> {
-            List<Path> files = paths != null ? StreamSupport.stream(paths.spliterator(), false)
-                    .collect(Collectors.toList()) : Collections.emptyList();
-            callback.callback(files);
-        }, errorCallback).newDirectoryStream(root);
+        DirectoryStream<Path> paths = vfsServiceCaller.newDirectoryStream(root);
+        List<Path> files = paths != null ? StreamSupport.stream(paths.spliterator(), false)
+                .collect(Collectors.toList()) : Collections.emptyList();
+        callback.callback(files);
     }
 
     /**
@@ -140,12 +149,9 @@ public class TestingVFSService {
                                    final String fileSuffix,
                                    final RemoteCallback<List<Path>> callback,
                                    final ErrorCallback<T> errorCallback) {
-        String filteredSuffix = fileSuffix.startsWith(".") ? fileSuffix : "." + fileSuffix;
-        vfsServiceCaller.call((DirectoryStream<Path> paths) -> {
-            List<Path> files = paths != null ? StreamSupport.stream(paths.spliterator(), false)
-                    .filter(path -> path.getFileName().endsWith(filteredSuffix))
-                    .collect(Collectors.toList()) : Collections.emptyList();
-            callback.callback(files);
-        }, errorCallback).newDirectoryStream(root);
+        DirectoryStream<Path> paths = vfsServiceCaller.newDirectoryStream(root);
+        List<Path> files = paths != null ? StreamSupport.stream(paths.spliterator(), false)
+                .collect(Collectors.toList()) : Collections.emptyList();
+        callback.callback(files);
     }
 }

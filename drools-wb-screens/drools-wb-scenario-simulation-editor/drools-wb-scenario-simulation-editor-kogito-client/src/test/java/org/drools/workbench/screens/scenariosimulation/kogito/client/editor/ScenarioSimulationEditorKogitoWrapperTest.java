@@ -22,7 +22,6 @@ import com.google.gwtmockito.GwtMockitoTestRunner;
 import elemental2.promise.Promise;
 import org.drools.scenariosimulation.api.model.ScenarioSimulationModel;
 import org.drools.scenariosimulation.api.model.Settings;
-import org.drools.workbench.scenariosimulation.kogito.marshaller.js.callbacks.SCESIMMarshallCallback;
 import org.drools.workbench.screens.scenariosimulation.client.commands.ScenarioSimulationContext;
 import org.drools.workbench.screens.scenariosimulation.client.editor.ScenarioSimulationEditorPresenter;
 import org.drools.workbench.screens.scenariosimulation.client.editor.strategies.DataManagementStrategy;
@@ -342,16 +341,9 @@ public class ScenarioSimulationEditorKogitoWrapperTest {
     }
 
     @Test
-    public void getJSInteropMarshallCallback() {
-        SCESIMMarshallCallback callback = scenarioSimulationEditorKogitoWrapperSpy.getJSInteropMarshallCallback(resolveCallBackMock);
-        callback.callEvent("xmlString");
-        verify(resolveCallBackMock, times(1)).onInvoke(eq("xmlString"));
-    }
-
-    @Test
     public void getModelSuccessCallbackMethodRule() {
         when(settingsMock.getType()).thenReturn(ScenarioSimulationModel.Type.RULE);
-        when(scenarioSimulationEditorPresenterMock.getJsonModel(eq(scenarioSimulationModelMock))).thenReturn(JSON_MODEL);
+        //when(scenarioSimulationEditorPresenterMock.getJsonModel(eq(scenarioSimulationModelMock))).thenReturn(JSON_MODEL);
         scenarioSimulationEditorKogitoWrapperSpy.onModelSuccessCallbackMethod(scenarioSimulationModelMock);
         verify(scenarioSimulationEditorPresenterMock, times(1)).sendNotification(eq(ScenarioSimulationEditorConstants.INSTANCE.ruleScenarioNotSupportedNotification()), eq(NotificationEvent.NotificationType.WARNING), eq(false));
         verify(scenarioSimulationEditorPresenterMock, times(1)).setPackageName(eq(ScenarioSimulationEditorKogitoWrapper.DEFAULT_PACKAGE));
@@ -364,7 +356,7 @@ public class ScenarioSimulationEditorKogitoWrapperTest {
     @Test
     public void getModelSuccessCallbackMethodDMN() {
         when(settingsMock.getType()).thenReturn(ScenarioSimulationModel.Type.DMN);
-        when(scenarioSimulationEditorPresenterMock.getJsonModel(eq(scenarioSimulationModelMock))).thenReturn(JSON_MODEL);
+        //when(scenarioSimulationEditorPresenterMock.getJsonModel(eq(scenarioSimulationModelMock))).thenReturn(JSON_MODEL);
         scenarioSimulationEditorKogitoWrapperSpy.onModelSuccessCallbackMethod(scenarioSimulationModelMock);
         verify(scenarioSimulationEditorPresenterMock, never()).sendNotification(any(), any(), anyBoolean());
         verify(scenarioSimulationEditorPresenterMock, times(1)).setPackageName(eq(ScenarioSimulationEditorKogitoWrapper.DEFAULT_PACKAGE));

@@ -18,13 +18,10 @@ package org.drools.workbench.screens.scenariosimulation.client.handlers;
 
 import com.google.gwtmockito.GwtMockitoTestRunner;
 import org.drools.workbench.screens.scenariosimulation.client.editor.AbstractScenarioSimulationEditorTest;
-import org.jboss.errai.bus.client.api.messaging.Message;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -41,20 +38,7 @@ public class ScenarioSimulationHasBusyIndicatorDefaultErrorCallbackTest extends 
             {
                 this.view = scenarioSimulationViewMock;
             }
-
-            @Override
-            protected boolean errorLocal(Message message, Throwable throwable) {
-                return false;
-            }
         });
-    }
-
-    @Test
-    public void error() {
-        Message messageMock = mock(Message.class);
-        Throwable throwableMock = mock(Throwable.class);
-        scenarioSimulationHasBusyIndicatorDefaultErrorCallback.error(messageMock, throwableMock);
-        verify(scenarioSimulationHasBusyIndicatorDefaultErrorCallback, times(1)).errorLocal(eq(messageMock), eq(throwableMock));
     }
 
     @Test

@@ -67,7 +67,6 @@ import org.drools.workbench.screens.scenariosimulation.model.FactMappingValidati
 import org.drools.workbench.screens.scenariosimulation.model.SimulationRunResult;
 import org.jboss.errai.common.client.api.ErrorCallback;
 import org.jboss.errai.common.client.api.RemoteCallback;
-import org.jboss.errai.enterprise.client.jaxrs.MarshallingWrapper;
 import org.kie.workbench.common.widgets.client.menu.FileMenuBuilder;
 import org.kie.workbench.common.widgets.client.resources.i18n.CommonConstants;
 import org.uberfire.backend.vfs.ObservablePath;
@@ -431,13 +430,7 @@ public class ScenarioSimulationEditorPresenter {
     }
 
     public boolean isDirty() {
-        try {
-            scenarioMainGridWidget.resetErrors();
-            int currentHashcode = MarshallingWrapper.toJSON(model).hashCode();
-            return scenarioSimulationEditorWrapper.getOriginalHash() != currentHashcode;
-        } catch (Exception ignored) {
-            return false;
-        }
+        return false;
     }
 
     public void onEditTabSelected() {
@@ -637,10 +630,6 @@ public class ScenarioSimulationEditorPresenter {
 
     protected void updateSettings(SettingsView.Presenter presenter) {
         presenter.updateSettingsData(model.getSettings());
-    }
-
-    public String getJsonModel(ScenarioSimulationModel model) {
-        return MarshallingWrapper.toJSON(model);
     }
 
     protected String getFileDownloadURL(final Supplier<Path> pathSupplier) {

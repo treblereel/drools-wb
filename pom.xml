@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.kie</groupId>
     <artifactId>kie-parent</artifactId>
-    <version>7.49.0-SNAPSHOT</version>
+    <version>7.48.0-SNAPSHOT</version>
   </parent>
 
   <groupId>org.drools</groupId>
@@ -68,7 +68,6 @@
   <modules>
     <module>drools-wb-services</module>
     <module>drools-wb-screens</module>
-    <module>drools-wb-webapp</module>
     <module>drools-wb-extensions</module>
   </modules>
 
@@ -122,6 +121,12 @@
         <version>${version.org.kie}</version>
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.elemental2</groupId>
+        <artifactId>elemental2-webstorage</artifactId>
+        <version>${version.com.google.elemental2}</version>
       </dependency>
 
       <dependency>
@@ -209,21 +214,21 @@
         </executions>
       </plugin>
 
-      <plugin>
+     <!-- <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
             <id>analyze-only</id>
-            <phase>verify</phase> <!-- it is anyway the default -->
+            <phase>verify</phase> &lt;!&ndash; it is anyway the default &ndash;&gt;
             <goals>
               <goal>analyze-only</goal>
             </goals>
             <configuration>
               <verbose>true</verbose>
-              <!-- The following lines are the original configuration of the replaced  IllegalTransitiveCheck rule.
-              We are keeping them here because we want to recreate them as similar as possible, even if they follow a different semantics -->
-              <!--
+              &lt;!&ndash; The following lines are the original configuration of the replaced  IllegalTransitiveCheck rule.
+              We are keeping them here because we want to recreate them as similar as possible, even if they follow a different semantics &ndash;&gt;
+              &lt;!&ndash;
                <regexIgnoredClass>org\.jboss\.errai\.marshalling\.server\.impl\.ServerMarshallingFactory.*</regexIgnoredClass>
                     <regexIgnoredClass>io\.fabric8\.kubernetes.*</regexIgnoredClass>
                     <regexIgnoredClass>io\.fabric8\.openshift.*</regexIgnoredClass>
@@ -231,11 +236,11 @@
                     <regexIgnoredClass>javax\..+</regexIgnoredClass>
                     <regexIgnoredClass>org\.w3c\.dom\..+</regexIgnoredClass>
                     <regexIgnoredClass>org\.xml\.sax\..+</regexIgnoredClass>
-              -->
+              &ndash;&gt;
               <ignoredUsedUndeclaredDependencies>
-                <!-- List of dependencies that will be ignored if they are used but undeclared. -->
-                <!-- For the moment being, manually add one-by-one. Next step will be to identify a pattern
-                 equivalent to the regexp used previously -->
+                &lt;!&ndash; List of dependencies that will be ignored if they are used but undeclared. &ndash;&gt;
+                &lt;!&ndash; For the moment being, manually add one-by-one. Next step will be to identify a pattern
+                 equivalent to the regexp used previously &ndash;&gt;
                 <dependency>
                   org.gwtbootstrap3:gwtbootstrap3
                 </dependency>
@@ -271,20 +276,20 @@
               </ignoredUsedUndeclaredDependencies>
               <ignoredUnusedDeclaredDependencies>
               <dependency>
-                <!-- We have to skip'em all for two reasons:
+                &lt;!&ndash; We have to skip'em all for two reasons:
                 1) some/most of them are inherited, not explicitly declared, so they should be "excluded" from inherited dependency,
                 2) some/most of them are required at runtime by showcases, so it is not possible to detect them at build time
                 Please remember primary scope of this configuration it is to (try to) avoid code breakage if inheritance tree changes.
-                -->
+                &ndash;&gt;
                 *:*
               </dependency>
               </ignoredUnusedDeclaredDependencies>
               <failOnWarning>true</failOnWarning>
-              <!-- other configurations here -->
+              &lt;!&ndash; other configurations here &ndash;&gt;
             </configuration>
           </execution>
         </executions>
-      </plugin>
+      </plugin>-->
 
     </plugins>
 

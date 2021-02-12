@@ -131,12 +131,13 @@ public class KogitoScenarioSimulationBuilder {
     private Callback<JSITDefinitions> getDMNContentCallback(final ScenarioSimulationModel toPopulate,
                                                             final Callback<ScenarioSimulationModel> populateEditorCommand,
                                                             final Path dmnPath) {
+
         return jsitDefinitions -> {
             final FactModelTuple factModelTuple = dmnDataManager.getFactModelTuple(jsitDefinitions);
-            toPopulate.setSimulation(createDMNSimulation(factModelTuple));
-            toPopulate.setSettings(createDMNSettings(jsitDefinitions.getName(),
-                                                     jsitDefinitions.getNamespace(),
-                                                     dmnPath.toURI()));
+            toPopulate.setSimulation(KogitoScenarioSimulationBuilder.this.createDMNSimulation(factModelTuple));
+            toPopulate.setSettings(KogitoScenarioSimulationBuilder.this.createDMNSettings(jsitDefinitions.getName(),
+                                                                                          jsitDefinitions.getNamespace(),
+                                                                                          dmnPath.toURI()));
             populateEditorCommand.callback(toPopulate);
         };
     }

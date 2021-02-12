@@ -64,7 +64,6 @@ import org.gwtbootstrap3.client.ui.TabListItem;
 import org.jboss.errai.common.client.api.ErrorCallback;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.jboss.errai.ui.client.local.spi.TranslationService;
-import org.kie.workbench.common.dmn.webapp.kogito.marshaller.js.model.MainJs;
 import org.kie.workbench.common.kogito.client.editor.MultiPageEditorContainerPresenter;
 import org.kie.workbench.common.kogito.client.editor.MultiPageEditorContainerView;
 import org.kie.workbench.common.kogito.client.resources.i18n.KogitoClientConstants;
@@ -309,8 +308,6 @@ public class ScenarioSimulationEditorKogitoWrapper extends MultiPageEditorContai
         super.init(place);
         resetEditorPages();
         authoringWorkbenchDocks.setup("AuthoringPerspective", place);
-        SCESIMMainJs.initializeJsInteropConstructors(SCESIMMainJs.getConstructorsMap());
-        MainJs.initializeJsInteropConstructors(MainJs.getConstructorsMap());
         scenarioSimulationEditorPresenter.setWrapper(this);
     }
 
@@ -423,7 +420,7 @@ public class ScenarioSimulationEditorKogitoWrapper extends MultiPageEditorContai
                                                                          scenarioSimulationKogitoDMNMarshallerService);
         }
         dataManagementStrategy.setModel(model);
-        setOriginalContentHash(scenarioSimulationEditorPresenter.getJsonModel(model).hashCode());
+        setOriginalContentHash(model.hashCode());
         scenarioSimulationEditorPresenter.getModelSuccessCallbackMethod(dataManagementStrategy, model);
         scenarioSimulationEditorPresenter.showDocks(PlaceStatus.CLOSE);
     }

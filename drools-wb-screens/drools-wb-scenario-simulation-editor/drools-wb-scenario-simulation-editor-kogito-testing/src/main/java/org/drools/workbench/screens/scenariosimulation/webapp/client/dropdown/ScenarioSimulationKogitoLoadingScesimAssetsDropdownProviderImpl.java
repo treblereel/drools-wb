@@ -25,7 +25,6 @@ import javax.inject.Inject;
 
 import com.google.gwt.core.client.GWT;
 import org.drools.workbench.screens.scenariosimulation.webapp.client.services.TestingVFSService;
-import org.jboss.errai.bus.client.api.messaging.Message;
 import org.jboss.errai.common.client.api.ErrorCallback;
 import org.jboss.errai.common.client.api.RemoteCallback;
 import org.kie.workbench.common.widgets.client.assets.dropdown.KieAssetsDropdownItem;
@@ -50,12 +49,12 @@ public class ScenarioSimulationKogitoLoadingScesimAssetsDropdownProviderImpl imp
                     .collect(Collectors.toList());
             assetListConsumer.accept(toAccept);
         }, (message, throwable) -> {
-            GWT.log(message.getCommandType() + " " + message.toString(), throwable);
+            GWT.log(message.toString(), throwable);
             return false;
         });
     }
 
-    public void getItems(final RemoteCallback<List<Path>> callback, final ErrorCallback<Message> errorCallback) {
+    public void getItems(final RemoteCallback<List<Path>> callback, final ErrorCallback<Object> errorCallback) {
         testingVFSService.getItemsByPath(SCESIM_PATH, FILE_SUFFIX, callback, errorCallback);
     }
 

@@ -23,7 +23,6 @@
   <source path="workarounds"/>
 
   <!-- Uberfire dependencies -->
-  <inherits name="org.uberfire.UberfireClient"/>
   <inherits name="org.uberfire.client.views.PatternFlyTheme"/>
   <inherits name="org.uberfire.ext.widgets.core.UberfireWidgetsCore"/>
   <inherits name="org.uberfire.ext.preferences.UberfirePreferences"/>

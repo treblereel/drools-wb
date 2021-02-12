@@ -200,10 +200,6 @@ public class ScenarioSimulationEditorPresenterTest extends AbstractScenarioSimul
 
             }
 
-            @Override
-            public String getJsonModel(ScenarioSimulationModel model) {
-                return "";
-            }
         });
     }
 
@@ -511,12 +507,6 @@ public class ScenarioSimulationEditorPresenterTest extends AbstractScenarioSimul
         verify(fileMenuBuilderMock, times(1)).addNewTopLevelMenu(exportToCsvMenuItemMock);
         verify(undoMenuItemMock, times(1)).setEnabled(eq(false));
         verify(redoMenuItemMock, times(1)).setEnabled(eq(false));
-    }
-
-    @Test
-    public void isDirty() {
-        when(scenarioSimulationViewMock.getScenarioGridWidget()).thenThrow(new RuntimeException());
-        assertFalse(presenterSpy.isDirty());
     }
 
     @Test
