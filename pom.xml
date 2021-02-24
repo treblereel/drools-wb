@@ -66,7 +66,6 @@
   </repositories>
 
   <modules>
-    <module>drools-wb-services</module>
     <module>drools-wb-screens</module>
     <module>drools-wb-extensions</module>
   </modules>
